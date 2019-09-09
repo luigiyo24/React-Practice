@@ -1,17 +1,17 @@
 import React from "react"
 import { connect } from "react-redux"
 
-const Suplentes = ({suplentes}) => (
+const Suplentes = ({suplentes, quitarSuplente}) => (
     <section>
         <h2>Suplentes</h2>
         <div className="suplentes">
             {
                 suplentes.map(
                     j => (
-                        <article className="suplente">
+                        <article className="suplente" key={j.id}>
                             <div>
                                 <img src={j.foto} alt={j.nombre} />
-                                <button>X</button>
+                                <button onClick={() => quitarSuplente(j)} >X</button>
                                 <p>{j.nombre}</p>
                             </div>
                         </article>
@@ -26,6 +26,13 @@ const mapStateToProps = state => ({
     suplentes: state.suplentes
 })
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+    quitarSuplente(jugador){
+        dispatch({
+            type: "QUITAR_SUPLENTE",
+            jugador
+        })
+    }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Suplentes)
